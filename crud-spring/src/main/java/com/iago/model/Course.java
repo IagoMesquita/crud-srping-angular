@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "courses")
@@ -15,9 +19,15 @@ public class Course {
   @GeneratedValue(strategy = GenerationType.AUTO)
   Long id;
 
+  @NotBlank // -> Pelo menos um caracter que nao seja espaco
+  @NotNull //-> Nao deixar ser nulo nem vazio
+  @Length(min = 5, max = 100)
   @Column(length = 200, nullable = false)
   String name;
 
+  @NotNull
+  @Length(max = 10)
+  @Pattern(regexp = "Back-end | Front-end")
   @Column(length = 20, nullable = false)
   String category;
 
