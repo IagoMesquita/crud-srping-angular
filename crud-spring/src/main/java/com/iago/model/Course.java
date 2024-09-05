@@ -31,12 +31,21 @@ public class Course {
   @Column(length = 20, nullable = false)
   String category;
 
-  public Course() {}
+  @NotNull
+  @Length(max = 10)
+  @Pattern(regexp = "Ativa | Inativo")
+  @Column(length = 10, nullable = false)
+  private String status = "Ativo";
 
-  public Course(String name, String category) {
+  public Course() {
+  }
+
+  public Course(String name, String category, String status) {
     this.name = name;
     this.category = category;
+    this.status = status;
   }
+
 
   public Long getId() {
     return id;
@@ -62,5 +71,12 @@ public class Course {
     this.category = category;
   }
 
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
 }
