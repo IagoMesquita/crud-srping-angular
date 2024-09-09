@@ -15,9 +15,8 @@ public record CourseDTO(
 
     @NotNull(message = "Campo category e obrigatório!")
     @Length(max = 10) @Pattern(regexp = "Back-end|Front-end")
-    @Column(length = 20, nullable = false) String category,
+    String category
 
-    @NotNull @Length(max = 10) @Pattern(regexp = "Ativo|Inativo") String status
 ) {
 
 }
