@@ -20,24 +20,24 @@ import org.hibernate.validator.constraints.Length;
 public class Course {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
 
   @NotBlank // -> Pelo menos um caracter que nao seja espaco
   @NotNull //-> Nao deixar ser nulo nem vazio
-  @Length(min = 5, max = 100)
+  @Length(min = 2, max = 100)
   @Column(length = 200, nullable = false)
   String name;
 
   @NotNull
   @Length(max = 10)
-  @Pattern(regexp = "Back-end | Front-end")
+  @Pattern(regexp = "Back-end|Front-end")
   @Column(length = 20, nullable = false)
   String category;
 
   @NotNull
   @Length(max = 10)
-  @Pattern(regexp = "Ativa | Inativo")
+  @Pattern(regexp = "Ativo|Inativo")
   @Column(length = 10, nullable = false)
   private String status = "Ativo";
 
