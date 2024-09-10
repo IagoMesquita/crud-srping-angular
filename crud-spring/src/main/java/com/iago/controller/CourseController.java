@@ -1,7 +1,7 @@
 package com.iago.controller;
 
-import com.iago.model.Course;
-import com.iago.repository.CourseRepository;
+import com.iago.dto.CourseDTO;
+import com.iago.dto.mapper.CourseMapper;
 import com.iago.service.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -27,21 +27,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class CourseController {
 
   private final CourseService courseService;
+  private final CourseMapper courseMapper;
 
   @Autowired
-  public CourseController(CourseService courseService) {
+  public CourseController(CourseService courseService, CourseMapper courseMapper) {
     this.courseService = courseService;
+    this.courseMapper = courseMapper;
   }
 
   @GetMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  public List<Course> list() {
+  public List<CourseDTO> list() {
     return courseService.list();
 
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Course> findById(@PathVariable @NotNull @Positive Long id) {
+  public ResponseEntity<CourseDTO> findById(@PathVariable @NotNull @Positive Long id) {
     return ResponseEntity
         .ok()
         .body(courseService.findById(id));
@@ -50,16 +52,18 @@ public class CourseController {
 
   @PostMapping
 //  @ResponseStatus(code = HttpStatus.CREATED)
-  public ResponseEntity<Course> create(@RequestBody @Valid Course course) {
-    Course newCourse = courseService.create(course);
+  public ResponseEntity<CourseDTO> create(@RequestBody @Valid CourseDTO courseDto) {
+    CourseDTO newCourse = courseService.create(
+        courseMapper.toEntity(courseDto)
+    );
     return ResponseEntity.status(HttpStatus.CREATED)
         .body(newCourse);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Course> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Course course) {
+  public ResponseEntity<CourseDTO> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO courseDTO) {
     return ResponseEntity.ok().body(
-        courseService.update(id, course)
+        courseService.update(id, courseMapper.toEntity(courseDTO))
     );
 
 
