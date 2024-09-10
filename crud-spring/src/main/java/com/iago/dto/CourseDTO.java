@@ -1,5 +1,6 @@
 package com.iago.dto;
 
+import com.iago.enums.Category;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,8 +15,8 @@ public record CourseDTO(
     @Column(length = 200, nullable = false) String name,
 
     @NotNull(message = "Campo category e obrigatório!")
-    @Length(max = 10) @Pattern(regexp = "Back-end|Front-end")
-    String category
+//    @Length(max = 10) @Pattern(regexp = "Back-end|Front-end")
+    Category category
 
 ) {
 

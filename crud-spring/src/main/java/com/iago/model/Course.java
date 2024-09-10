@@ -1,7 +1,10 @@
 package com.iago.model;
 
+import com.iago.enums.Category;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,10 +33,11 @@ public class Course {
   String name;
 
   @NotNull
-  @Length(max = 10)
-  @Pattern(regexp = "Back-end|Front-end")
+//  @Length(max = 10) -> Nao sera mais util com ENUM, pois valida apenas strings
+//  @Pattern(regexp = "Back-end|Front-end")
   @Column(length = 20, nullable = false)
-  String category;
+  @Enumerated(EnumType.STRING)
+  Category category;
 
   @NotNull
   @Length(max = 10)
@@ -44,7 +48,7 @@ public class Course {
   public Course() {
   }
 
-  public Course(String name, String category, String status) {
+  public Course(String name, Category category, String status) {
     this.name = name;
     this.category = category;
     this.status = status;
@@ -67,11 +71,11 @@ public class Course {
     this.name = name;
   }
 
-  public String getCategory() {
+  public Category getCategory() {
     return category;
   }
 
-  public void setCategory(String category) {
+  public void setCategory(Category category) {
     this.category = category;
   }
 
