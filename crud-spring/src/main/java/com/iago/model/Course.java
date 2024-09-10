@@ -1,10 +1,10 @@
 package com.iago.model;
 
 import com.iago.enums.Category;
+import com.iago.enums.converters.CategoryConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +36,8 @@ public class Course {
 //  @Length(max = 10) -> Nao sera mais util com ENUM, pois valida apenas strings
 //  @Pattern(regexp = "Back-end|Front-end")
   @Column(length = 20, nullable = false)
-  @Enumerated(EnumType.STRING)
+//  @Enumerated(EnumType.STRING) --> e substituido pelo Conversor
+  @Convert(converter = CategoryConverter.class)
   Category category;
 
   @NotNull
