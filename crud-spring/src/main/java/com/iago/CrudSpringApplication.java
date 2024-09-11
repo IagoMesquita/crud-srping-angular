@@ -1,6 +1,7 @@
 package com.iago;
 
 import com.iago.enums.Category;
+import com.iago.enums.Status;
 import com.iago.model.Course;
 import com.iago.repository.CourseRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -28,8 +29,8 @@ public class CrudSpringApplication {
 			Course course = new Course();
 
 			course.setName("Course " + i );
-			course.setCategory(Category.FRONT_END);
-			course.setStatus("Ativo");
+			course.setCategory(Category.BACK_END);
+			course.setStatus(Status.ATIVO);
 
 			courseRepository.save(course);
 		}
