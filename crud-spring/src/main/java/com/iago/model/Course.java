@@ -1,7 +1,9 @@
 package com.iago.model;
 
 import com.iago.enums.Category;
+import com.iago.enums.Status;
 import com.iago.enums.converters.CategoryConverter;
+import com.iago.enums.converters.StatusConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -11,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
@@ -41,15 +42,17 @@ public class Course {
   Category category;
 
   @NotNull
-  @Length(max = 10)
-  @Pattern(regexp = "Ativo|Inativo")
+//  @Length(max = 10)
+//  @Pattern(regexp = "Ativo|Inativo")
   @Column(length = 10, nullable = false)
-  private String status = "Ativo";
+//  @Enumerated(EnumType.STRING)
+  @Convert(converter = StatusConverter.class)
+  private Status status = Status.ATIVO;
 
   public Course() {
   }
 
-  public Course(String name, Category category, String status) {
+  public Course(String name, Category category, Status status) {
     this.name = name;
     this.category = category;
     this.status = status;
@@ -80,11 +83,11 @@ public class Course {
     this.category = category;
   }
 
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
