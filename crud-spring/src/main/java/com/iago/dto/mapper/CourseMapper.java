@@ -13,10 +13,13 @@ public class CourseMapper {
     if (course == null) { // evitar o nullpointExcepiton
       return null;
     }
+
+
     return new CourseDTO(
         course.getId(),
         course.getName(),
-        course.getCategory().getValue()
+        course.getCategory().getValue(),
+        course.getLessons()
     );
   }
 
