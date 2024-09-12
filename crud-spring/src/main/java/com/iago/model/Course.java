@@ -4,15 +4,19 @@ import com.iago.enums.Category;
 import com.iago.enums.Status;
 import com.iago.enums.converters.CategoryConverter;
 import com.iago.enums.converters.StatusConverter;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
@@ -48,6 +52,9 @@ public class Course {
 //  @Enumerated(EnumType.STRING)
   @Convert(converter = StatusConverter.class)
   private Status status = Status.ATIVO;
+
+  @OneToMany(mappedBy = "course" ,cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Lesson> lessons = new ArrayList<>();
 
   public Course() {
   }
@@ -91,4 +98,11 @@ public class Course {
     this.status = status;
   }
 
+  public List<Lesson> getLessons() {
+    return lessons;
+  }
+
+  public void setLessons(List<Lesson> lessons) {
+    this.lessons = lessons;
+  }
 }
