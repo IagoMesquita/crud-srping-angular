@@ -1,8 +1,9 @@
 package com.iago.dto;
 
-import com.iago.model.Lesson;
 import jakarta.persistence.Column;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import java.util.List;
@@ -15,9 +16,14 @@ public record CourseDTO(
     @Length(min = 4, max = 100)
     @Column(length = 200, nullable = false)
     String name,
-//    @Length(max = 10) @Pattern(regexp = "Back-end|Front-end")
+
+    @NotNull
+    @Length(max = 10)
+    @Pattern(regexp = "BACK_END|FRONT_END")
     String category,
-    List<Lesson> lessons
+
+
+    @NotNull @NotEmpty @Valid List<LessonDTO> lessons
 
 ) {
 
