@@ -1,7 +1,5 @@
 package com.iago.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "lessons")
@@ -20,12 +21,19 @@ public class Lesson {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
 
+  @NotNull
+  @NotBlank
+  @Length(min = 5, max = 100)
   @Column(length = 100, nullable = false)
   String name;
 
+  @NotNull
+  @NotBlank
+  @Length(min = 10, max = 11)
   @Column(length = 10, nullable = false)
   String youtubeUrl;
 
+  @NotNull
   @ManyToOne(fetch = FetchType.LAZY, optional = false) // -> Somente quando get course for chamado e que esse mapeamento sera carregado
   @JoinColumn(name = "course_id", nullable = false)
 //  @JsonProperty(access = Access.WRITE_ONLY) -> Essa anotacao seria pra nao dar erro de dependencia ciclica quando utilizo o entidade.
