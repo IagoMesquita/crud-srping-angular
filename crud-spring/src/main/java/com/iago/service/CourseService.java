@@ -48,6 +48,10 @@ public class CourseService {
         .map(recordFound -> {
           recordFound.setName(course.getName());
           recordFound.setCategory(course.getCategory());
+//          recordFound.setLessons(course.getLessons());
+          recordFound.getLessons().clear();
+//          course.getLessons().forEach(lesson -> recordFound.getLessons().add(lesson));
+          recordFound.setLessons(course.getLessons());
           return courseMapper.toDTO(courseRepository.save(recordFound));
         }).orElseThrow(() -> new RecordNotFoundException(id));
   }

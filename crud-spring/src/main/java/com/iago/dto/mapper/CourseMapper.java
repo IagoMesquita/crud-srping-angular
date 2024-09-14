@@ -1,9 +1,12 @@
 package com.iago.dto.mapper;
 
 import com.iago.dto.CourseDTO;
+import com.iago.dto.LessonDTO;
 import com.iago.enums.Category;
-import com.iago.enums.Status;
 import com.iago.model.Course;
+import com.iago.model.Lesson;
+import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,16 +17,20 @@ public class CourseMapper {
       return null;
     }
 
+    List<LessonDTO> lessonDTO = course.getLessons()
+        .stream()
+        .map(lesson -> new LessonDTO(lesson.getId(), lesson.getName(), lesson.getYoutubeUrl()))
+        .toList();
 
     return new CourseDTO(
         course.getId(),
         course.getName(),
         course.getCategory().getValue(),
-        course.getLessons()
+        lessonDTO
     );
   }
 
-  public Course toEntity(CourseDTO courseDTO) {
+  public @Valid Course toEntity(CourseDTO courseDTO) {
     if(courseDTO == null) {
       return null;
     }
@@ -36,6 +43,17 @@ public class CourseMapper {
     course.setName(courseDTO.name());
     course.setCategory(Category.valueOf(courseDTO.category()));
 //    course.setCategory(convertCategoryValue(courseDTO.category()));
+
+    List<Lesson> lessonsDb = courseDTO.lessons().stream().map(lessonDTO -> {
+      var lesson = new Lesson();
+      lesson.setId(lessonDTO.id());
+      lesson.setName(lessonDTO.name());
+      lesson.setYoutubeUrl(lessonDTO.youtubeURL());
+      lesson.setCourse(course); //depara com curso
+
+      return lesson;
+    }).toList();
+    course.setLessons(lessonsDb);
     return course;
   }
 
