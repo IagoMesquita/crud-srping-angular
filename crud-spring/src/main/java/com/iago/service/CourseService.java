@@ -1,6 +1,7 @@
 package com.iago.service;
 
 import com.iago.dto.CourseDTO;
+import com.iago.dto.CoursePageDTO;
 import com.iago.dto.mapper.CourseMapper;
 import com.iago.model.Course;
 import com.iago.repository.CourseRepository;
@@ -8,6 +9,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import com.iago.exception.RecordNotFoundException;
@@ -25,13 +28,19 @@ public class CourseService {
     this.courseMapper = courseMapper;
   }
 
-  public List<CourseDTO> list() {
-    List<Course> coursesDb = courseRepository.findAll();
-    return coursesDb
-        .stream()
-        .map(courseMapper::toDTO)
-        .toList();
+//  public List<CourseDTO> list() {
+//    List<Course> coursesDb = courseRepository.findAll();
+//    return coursesDb
+//        .stream()
+//        .map(courseMapper::toDTO)
+//        .toList();
+//
+//  }
 
+  public CoursePageDTO list(int pageNumber, int pageSize) {
+    Page<Course> page = courseRepository.findAll(PageRequest.of(pageNumber, pageSize));
+    List<CourseDTO> courses = page.get().map(courseMapper::toDTO).toList();
+    return new CoursePageDTO(courses, page.getTotalElements(), page.getTotalPages());
   }
 
   public CourseDTO findById(@NotNull @Positive Long id) {

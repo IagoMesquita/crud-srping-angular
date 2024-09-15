@@ -1,6 +1,7 @@
 package com.iago.controller;
 
 import com.iago.dto.CourseDTO;
+import com.iago.dto.CoursePageDTO;
 import com.iago.dto.mapper.CourseMapper;
 import com.iago.service.CourseService;
 import jakarta.validation.Valid;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,11 +37,17 @@ public class CourseController {
     this.courseMapper = courseMapper;
   }
 
+//  @GetMapping
+//  @ResponseStatus(code = HttpStatus.CREATED)
+//  public List<CourseDTO> list() {
+//    return courseService.list();
+//
+//  }
+
   @GetMapping
   @ResponseStatus(code = HttpStatus.CREATED)
-  public List<CourseDTO> list() {
-    return courseService.list();
-
+  public CoursePageDTO list(@RequestParam int pageNumber, int sizePage) {
+    return courseService.list(pageNumber, sizePage);
   }
 
   @GetMapping("/{id}")
