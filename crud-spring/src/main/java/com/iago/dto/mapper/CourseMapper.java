@@ -41,8 +41,7 @@ public class CourseMapper {
       course.setId(courseDTO.id());
     }
     course.setName(courseDTO.name());
-    course.setCategory(Category.valueOf(courseDTO.category()));
-//    course.setCategory(convertCategoryValue(courseDTO.category()));
+    course.setCategory(convertCategoryValue(courseDTO.category()));
 
     List<Lesson> lessonsDb = courseDTO.lessons().stream().map(lessonDTO -> {
       var lesson = new Lesson();
@@ -57,17 +56,17 @@ public class CourseMapper {
     return course;
   }
 
-//  public Category convertCategoryValue(String value) {
-//    if (value == null) {
-//      return null;
-//    }
-//
-//    return switch (value) {
-//      case "Back-end" -> Category.BACK_END;
-//      case "Front-end" -> Category.FRONT_END;
-//      default -> throw new IllegalArgumentException("Invalid value " + value);
-//    };
-//
-//  }
+  public Category convertCategoryValue(String value) {
+    if (value == null) {
+      return null;
+    }
+
+    return switch (value) {
+      case "Back-end" -> Category.BACK_END;
+      case "Front-end" -> Category.FRONT_END;
+      default -> throw new IllegalArgumentException("Invalid value " + value);
+    };
+
+  }
 
 }
