@@ -1,5 +1,7 @@
 package com.iago.dto;
 
+import com.iago.enums.Category;
+import com.iago.enums.validation.ValueOfEnum;
 import jakarta.persistence.Column;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -19,8 +21,10 @@ public record CourseDTO(
 
     @NotNull
     @Length(max = 10)
-    @Pattern(regexp = "BACK_END|FRONT_END")
+//    @Pattern(regexp = "Back-end|Front-end")
+    @ValueOfEnum(enumClass = Category.class)
     String category,
+
 
 
     @NotNull @NotEmpty @Valid List<LessonDTO> lessons
