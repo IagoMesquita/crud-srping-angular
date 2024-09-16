@@ -16,8 +16,6 @@ public enum Category {
 
   @Override
   public String toString() {
-    return "Category{" +
-        "categoryValue='" + categoryValue + '\'' +
-        '}';
+    return categoryValue;
   }
 }

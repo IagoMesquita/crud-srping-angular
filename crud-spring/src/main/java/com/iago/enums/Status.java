@@ -13,5 +13,8 @@ public enum Status {
     return statusValue;
   }
 
-
+  @Override
+  public String toString() {
+    return statusValue;
+  }
 }
