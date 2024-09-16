@@ -8,6 +8,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,21 +33,21 @@ public class Course {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Long id;
+  private Long id;
 
   @NotBlank // -> Pelo menos um caracter que nao seja espaco
   @NotNull //-> Nao deixar ser nulo nem vazio
   @Length(min = 2, max = 100)
   @Column(length = 200, nullable = false)
-  String name;
+  private String name;
 
   @NotNull
 //  @Length(max = 10) -> Nao sera mais util com ENUM, pois valida apenas strings
 //  @Pattern(regexp = "Back-end|Front-end")
   @Column(length = 20, nullable = false)
-//  @Enumerated(EnumType.STRING) --> e substituido pelo Conversor
+//  @Enumerated(EnumType.STRING)  --> e substituido pelo Conversor
   @Convert(converter = CategoryConverter.class)
-  Category category;
+  private Category category;
 
   @NotNull
 //  @Length(max = 10)
