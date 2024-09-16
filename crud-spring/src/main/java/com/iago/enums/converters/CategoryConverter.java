@@ -3,7 +3,7 @@ package com.iago.enums.converters;
 import com.iago.enums.Category;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 @Converter(autoApply = true) // --> jpa aplicar essa conversao sempre que necessario
 public class CategoryConverter implements AttributeConverter<Category, String> {
@@ -23,7 +23,7 @@ public class CategoryConverter implements AttributeConverter<Category, String> {
       return null;
     }
 
-    return Arrays.stream(Category.values())
+    return Stream.of(Category.values())
         .filter(category -> category.getValue().equals(categoryValue))
         .findFirst()
         .orElseThrow(IllegalArgumentException::new);
